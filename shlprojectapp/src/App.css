@@ -19,7 +19,7 @@ body {
   position: relative;
 }
 .wrapper .sidebar {
-  width: 160px;
+  width: 165px;
   height: 100%;
   padding: 30px 0px;
   background-color: rgb(154, 213, 255);
@@ -29,4 +29,5 @@ body {
 .wrapper .sidebar h3 {
   text-align: left;
   padding: 10px;
+  color: black
 }
