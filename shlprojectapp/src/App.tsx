@@ -4,9 +4,6 @@ import Sidebar from "./Components/Sidebar";
 import Top10 from "./Components/Top10";
 
 function App() {
-  useEffect(() => {
-    console.log("Mounting Dom!");
-  });
   const [count, setCount] = useState(0);
 
   return (
