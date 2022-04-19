@@ -15,6 +15,7 @@
 }
 
 .sidebarList {
+  position: relative;
   height: auto;
   padding: 0;
   width: 100%;
@@ -37,4 +38,10 @@
   cursor: pointer;
   background-color: rgb(88, 186, 255);
   color: rgb(253, 132, 51);
+}
+
+.Content {
+  display: flex;
+  position: fixed;
+  color: black;
 }
