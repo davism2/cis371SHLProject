@@ -1,12 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-}
-
-body {
-  background-color: azure;
+.App {
+  width: 100vw;
+  height: 100vh;
 }
 
 .logo {
@@ -14,20 +8,8 @@ body {
   pointer-events: none;
 }
 
-.wrapper {
-  display: flex;
-  position: relative;
-}
-.wrapper .sidebar {
-  width: 165px;
+.sidebar {
   height: 100%;
-  padding: 30px 0px;
-  background-color: rgb(154, 213, 255);
-  position: fixed;
-}
-
-.wrapper .sidebar h3 {
-  text-align: left;
-  padding: 10px;
-  color: black
+  width: 165px;
+  background-color: aqua;
 }
