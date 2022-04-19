@@ -98,7 +98,7 @@ type TeamStats = {
   };
 };
 
-type top10 = {
+type top10Skater = {
   id: number;
   name: string;
   leauge: number;
@@ -114,4 +114,4 @@ type top10 = {
   statName: string;
   statNameAbbr: string;
 };
-export { PlayerStats, PlayerAttributes, TeamStats, top10 };
+export { PlayerStats, PlayerAttributes, TeamStats, top10Skater };
