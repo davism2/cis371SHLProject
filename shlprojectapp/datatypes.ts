@@ -98,4 +98,20 @@ type TeamStats = {
   };
 };
 
-export { PlayerStats, PlayerAttributes, TeamStats };
+type top10 = {
+  id: number;
+  name: string;
+  leauge: number;
+  team: {
+    id: number;
+    name: string;
+    nickname: string;
+    abbr: string;
+  };
+  season: number;
+  gamesPlayed: number;
+  stat: number;
+  statName: string;
+  statNameAbbr: string;
+};
+export { PlayerStats, PlayerAttributes, TeamStats, top10 };
