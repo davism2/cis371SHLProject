@@ -3,7 +3,7 @@
   height: 100vh;
 }
 
-.logo {
+.sidebarLogo {
   height: 120px;
   pointer-events: none;
 }
@@ -11,5 +11,30 @@
 .sidebar {
   height: 100%;
   width: 165px;
-  background-color: aqua;
+  background-color: rgb(39, 129, 193);
+}
+
+.sidebarList {
+  height: auto;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebarList .sidebarRow {
+  width: 100%;
+  height: 30px;
+  list-style-type: none;
+  margin: 0%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: rgb(254, 187, 142);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.sidebarList .sidebarRow:hover {
+  cursor: pointer;
+  background-color: rgb(88, 186, 255);
+  color: rgb(253, 132, 51);
 }

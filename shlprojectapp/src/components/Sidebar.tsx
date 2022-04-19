@@ -1,18 +1,29 @@
 import React from "react";
 import "../App.css";
+import logo from "../shlLogo.png";
+import { SidebarData } from "./SidebarData";
 
 function Sidebar() {
   return (
     <>
       <div className="sidebar">
-        {/* <img src={logo} className="logo" alt="Test logo" /> */}
-        {/* <h3> Login</h3>
-        <h3> Top 10</h3>
-        <h3> Player Graphing</h3>
-        <h3> Team Graphing</h3>
-        <h3> Player Statistics</h3>
-        <h3> Team Statistics</h3>
-        <h3> Ideal Build</h3> */}
+        <img src={logo} className="sidebarLogo" alt="SHL Logo" />
+        <ul className="sidebarList">
+          {SidebarData.map((val, key) => {
+            return (
+              <li
+                key={key}
+                className="sidebarRow"
+                // id={window.location.}
+                onClick={() => {
+                  window.location.pathname = val.path;
+                }}
+              >
+                <div>{val.title}</div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </>
   );
