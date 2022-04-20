@@ -5,12 +5,12 @@ import axios, { AxiosResponse } from "axios";
 import { top10Skater } from "../datatypes";
 
 function Top10() {
-  const [goals, setGoals] = useState({} as top10Skater[]);
+  const [goals, setGoals] = useState([] as top10Skater[]);
 
   useEffect(() => {
     console.log("Mounting Dom!");
     getGoals();
-  });
+  }, []);
 
   const getGoals = () => {
     axios
@@ -20,9 +20,7 @@ function Top10() {
       })
       .then((r: AxiosResponse) => r.data)
       .then((r: top10Skater[]) => {
-        console.log(r);
-        // setGoals(r);
-        // console.log(goals);
+        setGoals(r);
       });
   };
 
@@ -34,13 +32,13 @@ function Top10() {
           <th>Team</th>
           <th>Goals</th>
         </tr>
-        {/* {goals.map((val, pos) => (
+        {goals.map((val, pos) => (
           <tr key={pos}>
             <td>{val.name}</td>
             <td>{val.team.abbr}</td>
             <td>{val.stat}</td>
           </tr>
-        ))} */}
+        ))}
       </table>
       <h1>Hello!</h1>
     </>
