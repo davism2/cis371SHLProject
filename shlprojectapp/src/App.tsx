@@ -8,13 +8,14 @@ import PrivProfile from "./components/profile"
 import { initializeApp } from "firebase/app";
 import  firebaseConfig from "./myconfig";
 import { Route, Routes } from "react-router-dom";
+import { getFirestore } from "firebase/firestore";
 
 
 
-initializeApp(firebaseConfig);
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 function App() {
-  const [count, setCount] = useState(0);
+const [count, setCount] = useState(0);
 
   return (
     <>

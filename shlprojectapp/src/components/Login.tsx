@@ -11,6 +11,19 @@ import {
   UserCredential,
   sendEmailVerification,
 } from "firebase/auth";
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  doc,
+  DocumentReference,
+  Firestore,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
+
+import {PlayerAttributes} from "../datatypes"
 
 // Don't declare this variable inside the function
 // Otherwise, it will get reset every render
@@ -20,7 +33,9 @@ export default function (): JSX.Element {
   const [u_email, setEmail] = useState("");
   const [u_pass, setPass] = useState("");
   const [message, setMessage] = useState("");
+  let playerData: PlayerAttributes;
   const navigate = useNavigate();
+
 
   useEffect(() => {
     auth = getAuth();
