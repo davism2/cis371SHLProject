@@ -1,106 +1,104 @@
-import React, { Component } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import logo from "../shlLogo.png";
-
 import {
-    getAuth,
-    Auth,
-    UserCredential,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    sendEmailVerification,
-    signOut,
-    sendPasswordResetEmail,
-  } from "firebase/auth";
+  Auth,
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
+  sendEmailVerification,
+} from "firebase/auth";
 
+// Don't declare this variable inside the function
+// Otherwise, it will get reset every render
+let auth: Auth | null;
 
-class LogInPage extends React.Component<any,any>{
+export default function (): JSX.Element {
+  const [u_email, setEmail] = useState("");
+  const [u_pass, setPass] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-    constructor(props){
-        super(props);
-        this.state ={
-            username: "user",
-            password: "password",
+  useEffect(() => {
+    auth = getAuth();
+    console.log("Auth is initialized", auth);
+  }, []);
+
+  function updateEmail(ev: ChangeEvent<HTMLInputElement>) {
+    setEmail(ev.target.value);
+  }
+  function updatePass(ev: ChangeEvent<HTMLInputElement>) {
+    setPass(ev.target.value);
+  }
+  function resetPass(): void {
+    sendPasswordResetEmail(auth!, u_email)
+      .then(() => {
+        showMessage(`A password reset link has been sent to ${u_email}`);
+      })
+      .catch((err: any) => {
+        showMessage(`Unable to reset password ${err}`);
+      });
+  }
+
+  function withEmail() {
+    signInWithEmailAndPassword(auth!, u_email, u_pass)
+      .then(async (cr: UserCredential) => {
+        if (cr.user.emailVerified) navigate("/profile");
+        else {
+          showMessage("You must first verify your email");
+          await signOut(auth!);
         }
-        this.createAccount = this.createAccount.bind(this);
-        this.withEmail = this.withEmail.bind(this);
-        
-    }
+      })
+      .catch((err: any) => {
+        showMessage(`Unable to login ${err}`);
+      });
+  }
 
-    
-    message = "";
-    auth: Auth = getAuth();
-    emailVerification = false;
-    get isValidInput(): boolean {
-        return this.state.username.length > 0 &&  this.state.password.length > 0;
-    }
-    
-    showMessage(txt: string) {
-        this.message = txt;
-        // The message will automatically disappear after 5 seconds
-        setTimeout(() => {
-        this.message = "";
-        }, 5000);
-    }
-    createAccount(): void {
-        createUserWithEmailAndPassword(this.auth!, this.state.username, this.state.password)
-        .then(async (cr: UserCredential) => {
-            if (this.emailVerification) {
-            await sendEmailVerification(cr.user);
-            await signOut(this.auth!);
-            console.log(
-                "An email verification has been sent to " + cr.user.email
-            );
-            } else console.log(`New account created with UID ${cr.user.uid}`);
-        })
-        .catch((err: any) => {
-            console.log(`Unable to create account ${err}`);
-        });
-    }
-    resetPass(): void {
-        sendPasswordResetEmail(this.auth!, this.state.username)
-        .then(() => {
-            this.showMessage(
-            `A password reset link has been sent to ${this.state.username}`
-            );
-        })
-        .catch((err: any) => {
-            this.showMessage(`Unable to reset password ${err}`);
-        });
-    }
-    
+  function createAccount() {
+    createUserWithEmailAndPassword(auth!, u_email, u_pass)
+    .then(async (cr: UserCredential) => {
+        await sendEmailVerification(cr.user);
+        showMessage(`Verification email sent to  ${u_email}`)
+    })
+    .catch((err: any) => {
+        alert(`Unable to create account ${err}`);
+      })};
 
-    
 
-    withEmail(): void {
-        signInWithEmailAndPassword(this.auth!, this.state.username, this.state.password)
-        .then(async (cr: UserCredential) => {
-            if (cr.user.emailVerified)
-            console.log("congrats you are logged in")
-            else {
-            console.log("You must first verify your email");
-            await signOut(this.auth!);
-            }
-        })
-        .catch((err: any) => {
-            console.log(`Unable to login ${err}`);
-        });
-    }
- 
-    render(){
-        return (
-            <div className="LogIn">
-                <img src={logo}/>
-                <div>
-                    <header><input type={"text"} name="username" placeholder="user"   onChange={ e => this.setState({username: e.target.value}) } /></header>
-                    <header><input type={"password"} name="password" placeholder="pass" onChange={ e => this.setState({password: e.target.value})} /></header>
-                    <header><button onClick={this.withEmail}>Log In </button></header>
-                    <header><button onClick={this.createAccount}>Sign Up </button></header>
-                </div>
-            </div>
-        );
-    }
+  function showMessage(msg: string) {
+    setMessage(msg);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 5000);
+  }
+
+  return (
+    <>
+      <section>
+      <img src={logo}/>
+        <div id="loginpanel">
+          <input
+            type="text"
+            placeholder="Enter your email"
+            onChange={updateEmail}
+          />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            onChange={updatePass}
+          />
+          <div id="loginByEmail">
+            <button onClick={createAccount}>Signup</button>
+            <button onClick={resetPass}>Reset Password</button>
+            <button onClick={withEmail}>Login</button>
+          </div>
+        </div>
+      </section>
+      <span id="msgbox">{message}</span>
+    </>
+  );
 }
-
-
-
-export default(LogInPage);
