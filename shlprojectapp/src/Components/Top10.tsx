@@ -69,7 +69,6 @@ function Top10() {
           </tr>
         ))}
       </table>
-      <h1>Hello!</h1>
     </>
   );
 }
