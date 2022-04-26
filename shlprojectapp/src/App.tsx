@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <div className="App">
-        {/* <Sidebar /> */}
+        <Sidebar />
         <Top10 />
         {/* <h1 className="Content"> Hello World!</h1> */}
       </div>
