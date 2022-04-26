@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import PlayerGraphing from "./Components/PlayerGraphing";
 import Sidebar from "./Components/Sidebar";
 import Top10 from "./Components/Top10";
 
@@ -9,8 +10,9 @@ function App() {
   return (
     <>
       <div className="App">
-        <Sidebar />
-        <Top10 />
+        {/* <Sidebar /> */}
+        {/* <Top10 /> */}
+        <PlayerGraphing />
       </div>
     </>
   );
