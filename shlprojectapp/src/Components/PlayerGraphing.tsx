@@ -41,14 +41,28 @@ function PlayerGraphing() {
           placeholder="Enter Player ID"
           onBlur={updatePlayerID}
         />
+
+        <ScatterChart width={400} height={400}>
+          <CartesianGrid />
+          <XAxis
+            type="number"
+            dataKey="season"
+            domain={[56, 65]}
+            label={{
+              value: "Season",
+              position: "insideBottom",
+              offset: 0,
+            }}
+          />
+          <YAxis
+            type="number"
+            dataKey="goals"
+            label={{ value: "Goals", angle: -90, position: "insideLeft" }}
+          />
+          <Scatter data={goals} fill="green" />
+        </ScatterChart>
       </div>
 
-      <ScatterChart width={400} height={400}>
-        <CartesianGrid />
-        <XAxis type="number" dataKey="season" domain={[56, 63]} />
-        <YAxis type="number" dataKey="goals" />
-        <Scatter data={goals} fill="green" />
-      </ScatterChart>
       {/* <table>
         <tr>
           <th>Season</th>
