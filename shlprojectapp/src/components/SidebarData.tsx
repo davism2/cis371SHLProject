@@ -2,8 +2,12 @@ import React from "react";
 
 export const SidebarData = [
   {
-    title: "Home",
+    title: "Profile",
     path: "/profile",
+  },
+  {
+    title: "Public",
+    path: "/public",
   },
   {
     title: "Login",

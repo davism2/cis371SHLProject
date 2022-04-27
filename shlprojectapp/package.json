@@ -12,7 +12,8 @@
     "firebase": "^9.6.11",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "recharts": "^2.1.9"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

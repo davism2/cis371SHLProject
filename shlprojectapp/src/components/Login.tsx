@@ -34,36 +34,7 @@ export default function (): JSX.Element {
   const [u_email, setEmail] = useState("");
   const [u_pass, setPass] = useState("");
   const [message, setMessage] = useState("");
-  let playerData: PlayerAttributes = {
-    id: 0,
-    league: 0,
-    season: 0,
-    name: "",
-    screening: 5,
-    gettingOpen: 5,
-    passing: 5,
-    shootingAccuracy: 5,
-    shootingRange: 5,
-    offensiveRead: 5,
-    checking: 5,
-    hitting: 5,
-    positioning: 5,
-    stickchecking: 5,
-    faceoffs: 5,
-    defensiveRead: 5,
-    agility: 5,
-    balance: 5,
-    speed: 5,
-    stamina: 5,
-    strength: 5,
-    fighting: 5,
-    aggression: 5,
-    bravery: 5,
-    determination: 5,
-    leadership: 5,
-    temperament: 5,
-    professionalism: 5,
-  };
+  
   const db = getFirestore();
   const navigate = useNavigate();
 
@@ -104,17 +75,8 @@ export default function (): JSX.Element {
   }
 
   function createAccount() {
-    createUserWithEmailAndPassword(auth!, u_email, u_pass)
-    .then(async (cr: UserCredential) => {
-      let ref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
-      await setDoc(ref,playerData);
-      await updateDoc(ref,{point:1800});
-        await sendEmailVerification(cr.user);
-        showMessage(`Verification email sent to  ${u_email}`)
-    })
-    .catch((err: any) => {
-        alert(`Unable to create account ${err}`);
-      })};
+    navigate("/create");
+  }
 
 
   function showMessage(msg: string) {

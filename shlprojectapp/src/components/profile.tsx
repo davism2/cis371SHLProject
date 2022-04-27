@@ -144,8 +144,6 @@ export default function (): JSX.Element {
       let data = docSnap.data();
       Object.keys(playerCopy).map(key => {playerCopy[key] = data[key]});
       setPlayer(playerCopy);
-      console.log(playerCopy);
-      console.log(player);
       setPoints(data.point);
     } else {
       // doc.data() will be undefined in this case
