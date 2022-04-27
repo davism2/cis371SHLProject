@@ -21,7 +21,7 @@ export default function (): JSX.Element {
     id: 0,
     league: 0,
     season: 0,
-    name: "",
+    name: "first last",
     screening: 5,
     gettingOpen: 5,
     passing: 5,
@@ -79,9 +79,12 @@ export default function (): JSX.Element {
   function updateUser(ev: ChangeEvent<HTMLInputElement>){
     setUser(ev.target.value);
   }
-
-  function updateName(ev: ChangeEvent<HTMLInputElement>){
+  function updateName1(ev: ChangeEvent<HTMLInputElement>){
     playerCopy.name = ev.target.value;
+    setPlayer(playerCopy);
+  }
+  function updateName2(name: string){
+    playerCopy.name = name;
     setPlayer(playerCopy);
   }
   function updatePoints(inc: boolean,value: number){
@@ -137,14 +140,15 @@ export default function (): JSX.Element {
 
   async function showPlayer(){
     console.log(userID);
-    ref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
     setShow(true);
     let docSnap = await getDoc(ref);
-    let copy:PlayerAttributes = {...player};
+    
     if (docSnap.exists()) {
       let data = docSnap.data();
-      Object.keys(copy).map(key => {console.log(copy[key] = data[key])});
-      setPlayer(copy);
+      Object.keys(playerCopy).map(key => {playerCopy[key] = data[key]});
+      setPlayer(playerCopy);
+      console.log(playerCopy);
+      console.log(player);
       setPoints(data.point);
     } else {
       // doc.data() will be undefined in this case
@@ -164,20 +168,25 @@ export default function (): JSX.Element {
     component=<button onClick={showPlayer}> Show Character </button>
   }
   else{
+    
     component =[<li> Amount of points: {points}</li>,<header>
         {Object.keys(player).slice(3).map(key => {
         if(key=="name")
-        return (<li>{key}<input type={"text"} defaultValue="First Last" onChange={updateName}></input></li>)
+        return (<li>{key}<input type={"text"} value={player.name} onChange={updateName1}></input></li>)
         else
           return (<li>{key}&emsp;<button onClick={() => updateAttr(false,key)}>Dec</button>&emsp; {player[key]}  &emsp;<button onClick={() => updateAttr(true,key)}>Inc</button></li>)})}</header>,<button onClick={savePlayer} > Save Player </button>]
   }
 
-
+  function test(){
+    console.log(playerCopy);
+    console.log(player);
+  }
   return(
     <div className="profile">
       Welcome to your profile {username}!!
       <div>
       <input type="text" placeholder="Enter your username" onChange={updateUser}/>
+      <button onClick={test}>test</button>
       <button onClick={logOut}>Log out</button>
       </div>
       <div>
@@ -186,4 +195,5 @@ export default function (): JSX.Element {
     </div>
   );  
 }
+
 
