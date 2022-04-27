@@ -47,17 +47,19 @@ function PlayerGraphing() {
           <XAxis
             type="number"
             dataKey="season"
-            domain={[56, 65]}
+            domain={[53, 64]}
             label={{
               value: "Season",
               position: "insideBottom",
               offset: 0,
             }}
+            tickCount={goals.length}
           />
           <YAxis
             type="number"
             dataKey="goals"
             label={{ value: "Goals", angle: -90, position: "insideLeft" }}
+            tickCount={6}
           />
           <Scatter data={goals} fill="green" />
         </ScatterChart>
