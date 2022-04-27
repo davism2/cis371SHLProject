@@ -7,7 +7,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid } from "recharts";
 
 function PlayerGraphing() {
   const [playerData, setPlayerData] = useState([] as PlayerStats[]);
-  const [playerID, setPlayerID] = useState("700");
+  const [playerID, setPlayerID] = useState(700);
   const [playerName, setPlayerName] = useState("");
 
   useEffect(() => {
@@ -16,11 +16,13 @@ function PlayerGraphing() {
   }, []);
 
   const getGoals = () => {
+    console.log(
+      "https://index.simulationhockey.com/api/v1/players/stats/" + playerID
+    );
     axios
       .request({
         method: "GET",
-        url:
-          "https://index.simulationhockey.com/api/v1/players/stats/" + playerID,
+        url: `https://index.simulationhockey.com/api/v1/players/stats/${playerID}`,
       })
       .then((r: AxiosResponse) => r.data)
       .then((r: PlayerStats[]) => {
@@ -31,7 +33,10 @@ function PlayerGraphing() {
   };
 
   function updatePlayerID(ev: ChangeEvent<HTMLInputElement>) {
-    setPlayerID(ev.target.value);
+    console.log("Before SetPlayer " + playerID);
+    setPlayerID(Number(ev.target.value));
+    console.log("Target ID " + ev.target.value);
+    console.log("After SetPlayer " + playerID);
     getGoals();
   }
 
