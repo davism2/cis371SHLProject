@@ -8,6 +8,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid } from "recharts";
 function PlayerGraphing() {
   const [goals, setGoals] = useState([] as PlayerStats[]);
   const [playerID, setPlayerID] = useState("700");
+  const [playerName, setPlayerName] = useState("");
 
   useEffect(() => {
     console.log("Mounting Dom!");
@@ -25,6 +26,7 @@ function PlayerGraphing() {
       .then((r: PlayerStats[]) => {
         console.log(r);
         setGoals(r);
+        setPlayerName(r[0].name);
       });
   };
 
@@ -41,7 +43,7 @@ function PlayerGraphing() {
           placeholder="Enter Player ID"
           onBlur={updatePlayerID}
         />
-
+        <body>{playerName}</body>
         <ScatterChart width={400} height={400}>
           <CartesianGrid />
           <XAxis
