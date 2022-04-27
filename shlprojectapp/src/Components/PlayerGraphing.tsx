@@ -49,13 +49,13 @@ function PlayerGraphing() {
           <XAxis
             type="number"
             dataKey="season"
-            domain={[53, 64]}
+            domain={[52, 64]}
             label={{
               value: "Season",
               position: "insideBottom",
               offset: 0,
             }}
-            tickCount={goals.length}
+            // tickCount={goals.length + 2}
           />
           <YAxis
             type="number"
