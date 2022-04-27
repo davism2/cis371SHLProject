@@ -3,6 +3,7 @@ import React from "react";
 import "../App.css";
 import axios, { AxiosResponse } from "axios";
 import { PlayerStats } from "../datatypes";
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid } from "recharts";
 
 function PlayerGraphing() {
   const [goals, setGoals] = useState([] as PlayerStats[]);
@@ -42,7 +43,13 @@ function PlayerGraphing() {
         />
       </div>
 
-      <table>
+      <ScatterChart width={400} height={400}>
+        <CartesianGrid />
+        <XAxis type="number" dataKey="season" domain={[56, 63]} />
+        <YAxis type="number" dataKey="goals" />
+        <Scatter data={goals} fill="green" />
+      </ScatterChart>
+      {/* <table>
         <tr>
           <th>Season</th>
           <th>Team</th>
@@ -57,7 +64,7 @@ function PlayerGraphing() {
             <td>{val.goals}</td>
           </tr>
         ))}
-      </table>
+      </table> */}
     </>
   );
 }

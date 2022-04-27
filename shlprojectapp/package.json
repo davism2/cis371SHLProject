@@ -10,7 +10,8 @@
   "dependencies": {
     "axios": "^0.26.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "recharts": "^2.1.9"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
