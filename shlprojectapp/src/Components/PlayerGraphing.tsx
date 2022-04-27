@@ -55,7 +55,6 @@ function PlayerGraphing() {
               position: "insideBottom",
               offset: 0,
             }}
-            // tickCount={goals.length + 2}
           />
           <YAxis
             type="number"
