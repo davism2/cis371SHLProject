@@ -48,7 +48,8 @@ import {PlayerAttributes} from "../datatypes"
       professionalism: 5,
     });
     let playerCopy = {...player};
-
+    let auth: Auth | null = getAuth();
+    let userID = auth?.currentUser?.uid;
 
     const [points,setPoints] = useState(1800);
     
@@ -140,17 +141,8 @@ import {PlayerAttributes} from "../datatypes"
 
 
     async function testing(){
-      let user = getAuth();
-      let userID = user.currentUser;
-      let ref = doc(db,"PrivatePlayers",user.name);
-      const docSnap = await getDoc(ref);
-
-      if ((await docSnap).exists()) {
-        console.log("Document data:", docSnap.data());
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
+      let ref = doc(db,"PrivatePlayers",`${userID}`);
+      const docSnap = await setDoc(ref,player);
     }
      //key => <li > {key}<input type="text"></input> </li>
     return(
