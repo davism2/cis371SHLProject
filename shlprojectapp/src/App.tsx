@@ -29,7 +29,6 @@ const [count, setCount] = useState(0);
           <Route path="/create" element={<NewAccount/>}/>
           <Route path="/top10" element={<Top10/>}/>
           <Route path="/profile" element={<PrivProfile/>}/>
-          <Route path="playerGraphic" element={<playerGraphing/>}/>
         </Routes> } 
          {/* <h1 className="Content"> Hello World!</h1>  */}
       </div>
