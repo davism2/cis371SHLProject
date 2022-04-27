@@ -6,7 +6,7 @@ import { PlayerStats } from "../datatypes";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid } from "recharts";
 
 function PlayerGraphing() {
-  const [goals, setGoals] = useState([] as PlayerStats[]);
+  const [playerData, setPlayerData] = useState([] as PlayerStats[]);
   const [playerID, setPlayerID] = useState("700");
   const [playerName, setPlayerName] = useState("");
 
@@ -25,7 +25,7 @@ function PlayerGraphing() {
       .then((r: AxiosResponse) => r.data)
       .then((r: PlayerStats[]) => {
         console.log(r);
-        setGoals(r);
+        setPlayerData(r);
         setPlayerName(r[0].name);
       });
   };
@@ -63,7 +63,7 @@ function PlayerGraphing() {
             label={{ value: "Goals", angle: -90, position: "insideLeft" }}
             tickCount={6}
           />
-          <Scatter data={goals} fill="green" />
+          <Scatter data={playerData} fill="green" />
         </ScatterChart>
       </div>
 
