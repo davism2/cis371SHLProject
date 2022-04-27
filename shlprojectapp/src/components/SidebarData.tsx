@@ -3,11 +3,11 @@ import React from "react";
 export const SidebarData = [
   {
     title: "Home",
-    path: "/home",
+    path: "/profile",
   },
   {
     title: "Login",
-    path: "/Login",
+    path: "/",
   },
   {
     title: "Top 10",

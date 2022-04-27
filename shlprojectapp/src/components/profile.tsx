@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { ChangeEvent, Component, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
     getAuth,
@@ -54,7 +54,7 @@ export default function (): JSX.Element {
   const [points,setPoints] = useState(1800);
   
   const db = getFirestore();
-  const ref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
+  let ref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
   const navigate = useNavigate();
 
 
@@ -64,8 +64,15 @@ export default function (): JSX.Element {
     setTimeout(() => {
       postMessage("");
     }, 5000);
-    }
+  }
+
+
   function logOut(){
+    signOut(auth).then(() => {
+      showMessage(`Signed out`);
+    }).catch((error) => {
+      console.log("did not sign out");
+    });
     navigate(-1);
   }
 
@@ -73,14 +80,9 @@ export default function (): JSX.Element {
     setUser(ev.target.value);
   }
 
-  async function createPlayer(){
-    showMessage("To make a new Player, delete your current one.")    
-  }
   function updateName(ev: ChangeEvent<HTMLInputElement>){
     playerCopy.name = ev.target.value;
     setPlayer(playerCopy);
-    console.log(playerCopy);
-    console.log(player);
   }
   function updatePoints(inc: boolean,value: number){
     let pVal = 1;
@@ -113,6 +115,8 @@ export default function (): JSX.Element {
 
   function updateAttr(inc: boolean,key:string){
     let value = playerCopy[key];
+    if(value ==5 && inc == false){showMessage(`Cannot set attribute below 5`); return}
+    if(value ==20 && inc == true){showMessage(`Cannot set attribute above 20`);return}
     updatePoints(inc,value);
     
     if(inc == true){
@@ -132,27 +136,29 @@ export default function (): JSX.Element {
 
 
   async function showPlayer(){
-    console.log("show player");
+    console.log(userID);
+    ref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
     setShow(true);
     let docSnap = await getDoc(ref);
     let copy:PlayerAttributes = {...player};
     if (docSnap.exists()) {
       let data = docSnap.data();
-      console.log(data);
       Object.keys(copy).map(key => {console.log(copy[key] = data[key])});
       setPlayer(copy);
       setPoints(data.point);
-      console.log(player);
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }
-  function savePlayer(){
+  async function savePlayer(){
+    let docSnap = await getDoc(ref);
+    if (docSnap.exists()) {
     updateDoc(ref,player);
     updateDoc(ref,{point:points});
+    }
   }
-    //key => <li > {key}<input type="text"></input> </li>
+
   let component;
   if(!playerShow){
     component=<button onClick={showPlayer}> Show Character </button>
@@ -173,7 +179,6 @@ export default function (): JSX.Element {
       <div>
       <input type="text" placeholder="Enter your username" onChange={updateUser}/>
       <button onClick={logOut}>Log out</button>
-      <button onClick={createPlayer}>Create Your Player</button> 
       </div>
       <div>
         {component}

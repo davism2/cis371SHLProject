@@ -20,12 +20,12 @@ const [count, setCount] = useState(0);
   return (
     <>
       <div className="App">
-        {/* <Sidebar /> */}
-        <Routes>
+        { <Sidebar /> }
+        { <Routes>
           <Route path="/" element={<LogInPage/>}/>
           <Route path="/top10" element={<Top10/>}/>
           <Route path="/profile" element={<PrivProfile/>}/>
-        </Routes>
+        </Routes> }
         {/* <h1 className="Content"> Hello World!</h1> */}
       </div>
     </>
