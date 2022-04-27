@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import logo from "../shlLogo.png";
-import {
+import {deleteUser,
   Auth,
   getAuth,
   createUserWithEmailAndPassword,

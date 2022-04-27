@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import {
+import {deleteUser,
     getAuth,
     Auth,
     UserCredential,
@@ -10,7 +10,7 @@ import {
     signOut,
     sendPasswordResetEmail,
   } from "firebase/auth";
-import { doc, FieldValue, Firestore, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, FieldValue, Firestore, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import {PlayerAttributes} from "../datatypes"
 
 export default function (): JSX.Element {
@@ -83,10 +83,7 @@ export default function (): JSX.Element {
     playerCopy.name = ev.target.value;
     setPlayer(playerCopy);
   }
-  function updateName2(name: string){
-    playerCopy.name = name;
-    setPlayer(playerCopy);
-  }
+
   function updatePoints(inc: boolean,value: number){
     let pVal = 1;
     if(inc == true){
@@ -162,6 +159,13 @@ export default function (): JSX.Element {
     updateDoc(ref,{point:points});
     }
   }
+  function deleteAcc(){
+    if(auth != null){
+      deleteUser(auth.currentUser).then(() => console.log('user deleted'));
+      deleteDoc(ref);
+      navigate(-1);
+    }
+  }
 
   let component;
   if(!playerShow){
@@ -177,17 +181,16 @@ export default function (): JSX.Element {
           return (<li>{key}&emsp;<button onClick={() => updateAttr(false,key)}>Dec</button>&emsp; {player[key]}  &emsp;<button onClick={() => updateAttr(true,key)}>Inc</button></li>)})}</header>,<button onClick={savePlayer} > Save Player </button>]
   }
 
-  function test(){
-    console.log(playerCopy);
-    console.log(player);
-  }
+
+  
+
   return(
     <div className="profile">
       Welcome to your profile {username}!!
       <div>
       <input type="text" placeholder="Enter your username" onChange={updateUser}/>
-      <button onClick={test}>test</button>
       <button onClick={logOut}>Log out</button>
+      <button onClick={deleteAcc}>Delete Account</button>
       </div>
       <div>
         {component}
