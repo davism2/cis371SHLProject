@@ -66,23 +66,6 @@ function PlayerGraphing() {
           <Scatter data={playerData} fill="green" />
         </ScatterChart>
       </div>
-
-      {/* <table>
-        <tr>
-          <th>Season</th>
-          <th>Team</th>
-          <th>Name</th>
-          <th>Goals</th>
-        </tr>
-        {goals.map((val, pos) => (
-          <tr key={pos}>
-            <td>{val.season}</td>
-            <td>{val.team}</td>
-            <td>{val.name}</td>
-            <td>{val.goals}</td>
-          </tr>
-        ))}
-      </table> */}
     </>
   );
 }
