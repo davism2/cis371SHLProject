@@ -14,7 +14,7 @@
 
 .sidebar {
   height: 100%;
-  width: 165px;
+  width: 10%;
   background-color: rgb(39, 129, 193);
 }
 
@@ -48,4 +48,16 @@
   display: flex;
   position: fixed;
   color: black;
+}
+.profile{
+  min-width: 90%;
+  min-height: 100%;
+  bottom: 0;
+  background-color: rgb(243, 169, 169);
+
+}
+.player{
+  list-style-type:none;
+  text-align: center;
+  background-color: rgb(245, 209, 209);
 }

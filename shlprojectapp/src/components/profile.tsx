@@ -152,6 +152,7 @@ export default function (): JSX.Element {
       console.log("No such document!");
     }
   }
+  
   async function savePlayer(){
     let docSnap = await getDoc(ref);
     if (docSnap.exists()) {
@@ -191,9 +192,9 @@ export default function (): JSX.Element {
       <button onClick={logOut}>Log out</button>
       <button onClick={deleteAcc}>Delete Account</button>
       </div>
-      <div>
+      <ul className="player">
         {component}
-      </div>
+      </ul>
     </div>
   );  
 }
