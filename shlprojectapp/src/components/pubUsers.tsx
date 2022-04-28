@@ -20,30 +20,47 @@ import {
     setDoc,
     updateDoc,
   } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
   
 
   export default function NewAccount() {
-    let userList = [];
+    const [userList,setUsers] = useState([]);
+    
+    useEffect(() => {
+      console.log("Mounting Dom!");
+      publicU();
+    }, []);
+
+
     async function publicU(){
         const db = getFirestore();
         const userSnapshot = await getDocs(collection(db, "pubUsers"));
-        const userList = userSnapshot.docs.map((doc)=> {
+        let userListC = userSnapshot.docs.map((doc)=> {
             return { id: doc.id, ...doc.data() }
-          });
+          })
+        setUsers(userListC);
         console.log(userList);
-    
+        userList.map((item) => {console.log(item.id)})
     }
+
+    //let component = userList.map((item) => {console.log(item.id)})
     return (
       <>
-        <button onClick={publicU}></button>
+        
+        
         <table>
+          <thead>
             <tr>
-                <th>UserName</th>            
+                <th>UserName</th>  
+                <th>Points</th>          
             </tr>
-           
+          </thead>
+          <tbody>
+            {userList.map((item) => {return(<tr><td>{item.id}</td><td>{item.points}</td></tr>)})}
+          </tbody>
         </table>
-        {userList.map((item,key) => <li key={item.id}>{item.id}</li>)}
+        
         </>
     );
   }
@@ -53,6 +70,6 @@ import {
 //     const querySnapshot = getDocs(collection(db, "pubUsers"));
 //     return(
 //         <>
-
+//return (<tr><td>{item.id}</td><td>{item.points}</td></tr>)
 //         </>
 //     )

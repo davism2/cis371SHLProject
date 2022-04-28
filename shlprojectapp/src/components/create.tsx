@@ -81,9 +81,10 @@ import {
         createUserWithEmailAndPassword(auth!, u_email, u_pass1)
           .then(async (cr: UserCredential) => {
             let Privref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
-            let points = 200 + (Math.random() * (1800-200));
+            let points = (200 + (Math.random() * (1800-200))) | 0;
             setDoc(Privref,playerData);
             updateDoc(Privref,{points});
+            updateDoc(Privref,{username});
             let Pubref = doc(db,"pubUsers",`${username}`);
             setDoc(Pubref,{points});
             await sendEmailVerification(cr.user);

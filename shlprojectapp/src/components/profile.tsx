@@ -1,22 +1,19 @@
-import React, { ChangeEvent, Component, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import  { ChangeEvent, useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import {deleteUser,
     getAuth,
     Auth,
-    UserCredential,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    sendEmailVerification,
     signOut,
-    sendPasswordResetEmail,
   } from "firebase/auth";
-import { deleteDoc, doc, FieldValue, Firestore, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
-import {PlayerAttributes} from "../datatypes"
+import { deleteDoc, doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 
+let auth: Auth | null = getAuth();
+if (auth == null){
+  auth.onAuthStateChanged(() => console.log('rip'));
+}
 export default function (): JSX.Element {
     
   const [playerShow,setShow] = useState(false);
-  const [username,setUser] = useState("");
   const [player,setPlayer] = useState({
     id: 0,
     league: 0,
@@ -47,8 +44,8 @@ export default function (): JSX.Element {
     temperament: 5,
     professionalism: 5,
   });
+
   let playerCopy = {...player};
-  let auth: Auth | null = getAuth();
   let userID = auth?.currentUser?.uid;
 
   const [points,setPoints] = useState(1800);
@@ -76,9 +73,7 @@ export default function (): JSX.Element {
     navigate(-1);
   }
 
-  function updateUser(ev: ChangeEvent<HTMLInputElement>){
-    setUser(ev.target.value);
-  }
+
   function updateName1(ev: ChangeEvent<HTMLInputElement>){
     playerCopy.name = ev.target.value;
     setPlayer(playerCopy);
@@ -136,6 +131,12 @@ export default function (): JSX.Element {
 
 
   async function showPlayer(){
+    if(auth == null){
+      auth=getAuth();
+      ref = doc(db,"PrivatePlayers",`${auth?.currentUser?.uid}`);
+      userID = auth.currentUser.uid;
+    }
+      
     console.log(userID);
     setShow(true);
     let docSnap = await getDoc(ref);
@@ -144,7 +145,8 @@ export default function (): JSX.Element {
       let data = docSnap.data();
       Object.keys(playerCopy).map(key => {playerCopy[key] = data[key]});
       setPlayer(playerCopy);
-      setPoints(data.point);
+      setPoints(data.points);
+      console.log(data.points);
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
@@ -184,9 +186,8 @@ export default function (): JSX.Element {
 
   return(
     <div className="profile">
-      Welcome to your profile {username}!!
+      Welcome to your profile!!
       <div>
-      <input type="text" placeholder="Enter your username" onChange={updateUser}/>
       <button onClick={logOut}>Log out</button>
       <button onClick={deleteAcc}>Delete Account</button>
       </div>
@@ -197,4 +198,8 @@ export default function (): JSX.Element {
   );  
 }
 
+
+function useAuthState(auth: Auth): [any, any, any] {
+  throw new Error("Function not implemented.");
+}
 
